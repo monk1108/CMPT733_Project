@@ -1,0 +1,101 @@
+/* Reset CSS */
+body, html {
+    margin: 100;
+    padding: 100;
+    font-family: 'Microsoft YaHei', sans-serif; /* 使用微软雅黑字体 */
+}
+
+/* Header */
+header {
+    background-color: red;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Form */
+form {
+    margin: 20px auto;
+    width: 50%;
+    padding: 20px;
+    border: 3px solid #BED7DC;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px; /* 调整标签的字体大小 */
+}
+
+form input[type="text"] {
+    width: 95%;
+    padding: 12px; /* 调整输入框的内边距 */
+    margin-bottom: 20px;
+    border: 1px solid #D6DAC8;
+    border-radius: 5px;
+    font-size: 16px; /* 调整输入框的字体大小 */
+}
+
+
+form input[type="button"] {
+    background-color: #222831;
+    color: #EEEEEE;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px; /* 调整按钮的字体大小 */
+}
+
+/* Recommendations */
+#recommendations {
+    margin-top: 20px;
+}
+
+#recommendations table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-bottom: 20px; /* 增加表格底部边距 */
+}
+
+#recommendations table th, #recommendations table td {
+    padding: 12px; /* 调整单元格的内边距 */
+    border: 1px solid #496989;
+    font-size: 16px; /* 调整表格中字体的大小 */
+}
+
+
+
+#recommendations table th {
+    background-color: #58A399;
+    font-weight: bold;
+    text-align: left;
+}
+
+#recommendations table td {
+    text-align: left;
+}
+
+#recommendations table tr:nth-child(even) {
+    background-color: #FEFDED;
+}
+
+#recommendations table tr:nth-child(odd) {
+    background-color: #E2F4C5;
+}
+
+#recommendations table tr:hover {
+    background-color: #97E7E1;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

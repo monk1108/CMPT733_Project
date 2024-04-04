@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Result</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+    
+<body>
+    <h1>Combined Result</h1>
+    <form id="recommendForm">
+        <label for="itemName">Item Name:</label>
+        <input type="text" id="itemName" name="itemName"><br><br>
+        <label for="itemId">Item ID:</label>
+        <input type="text" id="itemId" name="itemId"><br><br>
+        <input type="button" value="Submit" onclick="getRecommendations()">
+    </form>
+
+    <h2>Recommendations:</h2>
+    <div id="recommendations"></div>
+
+    <script>
+        function getRecommendations() {
+            var itemName = document.getElementById("itemName").value;
+            var itemId = document.getElementById("itemId").value;
+
+            fetch('/recommend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ itemName: itemName, itemId: itemId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Extract HTML table from JSON response
+                var htmlTable = data.htmlTable;
+
+                // Find the recommendations div by id
+                var recommendationsDiv = document.getElementById("recommendations");
+
+                // Set the HTML table string to the recommendations div's innerHTML property
+                recommendationsDiv.innerHTML = htmlTable;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+    </script>
+    
+    
+</body>
+</html>
