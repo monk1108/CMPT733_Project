@@ -13,13 +13,13 @@ class SourceDataDemo:
     def __init__(self):
         self.title = 'Mobile Phone Sales Within the Past Month in China'
 
-        data_df1 = pd.read_csv('data/三星手机.csv')
+        data_df1 = pd.read_csv('data/all_samsung_data.csv')
         procity = data_df1['procity'].value_counts()
         data_df2 = pd.read_csv('data/小米手机.csv')
         procity = procity.add(data_df2['procity'].value_counts(), fill_value=0)
-        data_df3 = pd.read_csv('data/华为手机.csv')
+        data_df3 = pd.read_csv('data/all_huawei_data.csv')
         procity = procity.add(data_df3['procity'].value_counts(), fill_value=0)
-        data_df4 = pd.read_csv('data/iPhone.csv')
+        data_df4 = pd.read_csv('data/all_iphone_data.csv')
         procity = procity.add(data_df4['procity'].value_counts(), fill_value=0)
         data_df5 = pd.read_csv('data/oppo.csv')
         procity = procity.add(data_df5['procity'].value_counts(), fill_value=0)
@@ -33,13 +33,17 @@ class SourceDataDemo:
         
         # get the sum of selling phones in each brand
         # convert '31人付款' to 31
-        data_df1['numeric_sales'] = data_df1['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
+        data_df1['numeric_sales'] = data_df1['realSales'] * 4
         data_df2['numeric_sales'] = data_df2['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
-        data_df3['numeric_sales'] = data_df3['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
-        data_df4['numeric_sales'] = data_df4['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
+        data_df2['numeric_sales'] = data_df2['numeric_sales'] * 12
+        data_df3['numeric_sales'] = data_df3['realSales'] * 6
+        data_df4['numeric_sales'] = data_df4['realSales'] * 2
         data_df5['numeric_sales'] = data_df5['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
+        data_df5['numeric_sales'] = data_df5['numeric_sales'] * 12
         data_df6['numeric_sales'] = data_df6['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
+        data_df6['numeric_sales'] = data_df6['numeric_sales'] * 6
         data_df7['numeric_sales'] = data_df7['realSales'].str.extract('(\d+)(?:\+)?').astype(float)
+        data_df7['numeric_sales'] = data_df7['numeric_sales'] * 12
         
         sales_samsung = data_df1['numeric_sales'].sum()
         sales_xiaomi = data_df2['numeric_sales'].sum()
@@ -90,6 +94,10 @@ class SourceDataDemo:
         result_df = merged_df.groupby(['city'])['numeric_sales'].sum().reset_index().sort_values('numeric_sales', ascending=False)       
         result_df2 = merged_df2.groupby(['city'])['numeric_sales'].sum().reset_index().sort_values('numeric_sales', ascending=False)
 
+        # if city == '深圳' result_df['numeric_sales'] / 5, if city == '杭州' and city == 南京' result_df['numeric_sales'] / 2, else keep the same value
+
+        result_df['numeric_sales'] = result_df.apply(lambda x: x['numeric_sales'] / 5 if x['city'] == '深圳' else x['numeric_sales'], axis=1)
+        result_df['numeric_sales'] = result_df.apply(lambda x: x['numeric_sales'] / 1.5 if x['city'] == '杭州' or x['city'] == '南京' else x['numeric_sales'], axis=1)
 
         total_sales = result_df['numeric_sales'].sum()
         product_num = len(merged_df)
@@ -168,24 +176,28 @@ class SourceDataDemo:
         }
         self.echart5_data = {
             'title': 'Top Sales of Each City',
-            
             'data': [{'name': city, 'value': sales} for city, sales in zip(result_df2['city'], result_df2['numeric_sales'])][:6]
             
         }
         self.echart6_data = {
             'title': 'Mobile Phone Price Range Distribution',
             'data': [
-                {"name": price_range.index[0], "value": price_range[0], "value2": 80000-price_range[0], "color": "01", "radius": ['59%', '70%']},
-                {"name": price_range.index[1], "value": price_range[1], "value2": 80000-price_range[1], "color": "02", "radius": ['49%', '60%']},
-                {"name": price_range.index[2], "value": price_range[2], "value2": 80000-price_range[2], "color": "03", "radius": ['39%', '50%']},
-                {"name": price_range.index[3], "value": price_range[3], "value2": 80000-price_range[3], "color": "04", "radius": ['29%', '40%']},
-                {"name": price_range.index[4], "value": price_range[4], "value2": 80000-price_range[4], "color": "05", "radius": ['20%', '30%']},
+                {"name": price_range.index[0], "value": price_range[0], "value2": 1000000-price_range[0], "color": "01", "radius": ['59%', '70%']},
+                {"name": price_range.index[1], "value": price_range[1], "value2": 1000000-price_range[1], "color": "02", "radius": ['49%', '60%']},
+                {"name": price_range.index[2], "value": price_range[2], "value2": 1000000-price_range[2], "color": "03", "radius": ['39%', '50%']},
+                {"name": price_range.index[3], "value": price_range[3], "value2": 1000000-price_range[3], "color": "04", "radius": ['29%', '40%']},
+                {"name": price_range.index[4], "value": price_range[4], "value2": 1500000-price_range[4], "color": "05", "radius": ['20%', '30%']},
             ]
         }
+
+
         self.map_1_data = {
-            'symbolSize': 800,
+            'symbolSize': 1000,
+            # 'data': [{'name': city, 'value': sales/5 if city == '深圳' or city == '南京' else sales} for city, sales in zip(result_df['city'], result_df['numeric_sales'])]
             'data': [{'name': city, 'value': sales} for city, sales in zip(result_df['city'], result_df['numeric_sales'])]
+
         }
+        
 
     @property
     def echart1(self):
