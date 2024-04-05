@@ -1,20 +1,39 @@
-# CMPT733_Project
+# CMPT733 Project
+
+## Project Overview
+
+This project encompasses a comprehensive analysis of mobile phone data sourced from Taobao.com, China's largest e-commerce platform. It involves multiple components aimed at data extraction, visualization, predictive modeling, and a recommendation system.
 
 ## Project Architecture
-The project is made up of 5 parts:
-- **Data Scraping**: scrape data from taobao.com
-- **Visualization**: visualize the processed data
-- **Prediction**: find data's inner pattern, and predict the sales of a product based on its features
-- **Recommendation System**: recommend 10 most similar products based on one selected item
+
+The project is structured into five distinct parts:
+
+- **Data Scraping**: 
+  - Utilizes custom scraping scripts to gather data on mobile phones from Taobao.com over the past month.
+  
+- **Visualization**: 
+  - Employs visualization techniques to present insights derived from the processed data. This includes visualizations of sales across different provinces, price ranges, and geographical maps.
+  
+- **Prediction**: 
+  - Implements predictive modeling to identify underlying patterns within the product data. These patterns are then utilized to forecast the sales of specific products based on their features.
+  
+- **Recommendation System**: 
+  - Develops a recommendation engine capable of suggesting the ten most similar mobile phones based on a user-selected item.
 
 ## Implementation Details
+
 - **Data Scraping**: 
-    1. Scrape raw data of the product you're interested in: `python taobao_scraper.py`. You need to enter the product name, start page and end page.
-    2. Clean raw data to make product name, sales and other features organized: `python data_cleaning.py`.
-    3. Screen data and drop outliers: `python data_screening.py`.
-    4. Join search results of different products if you want: `python join_table.py`.
-- **Visualization**: `python app.py` and the result will be available as a local web page.
-- **Prediction**: run code blocks of `graph_analysis.ipynb`.
+  1. Run `python data_scraping/taobao_scraper.py` to scrape raw data of the desired product. This script requires input such as the product name, start page, and end page.
+  2. Execute `python data_scraping/data_cleaning.py` to clean and organize the scraped raw data, including standardizing product names, extracting sales data, and other relevant features.
+  3. Utilize `python data_scraping/data_screening.py` to screen the cleaned data and remove outliers, ensuring data quality.
+  4. Optionally merge search results of different products using `python data_scraping/join_table.py`.
+
+- **Visualization**: 
+  - Launch the visualization application using `python visualization/app.py`. The output will be accessible via a local web page.
+
+- **Prediction**: 
+  - Execute the code blocks within `prediction/graph_analysis.ipynb` to perform graph analysis and predictive modeling.
+
 - **Recommendation System**: 
-    1. To get recommendation results of a certain product, `python recommender.py`.
-    2. To interact with the recomendation system, `python app.py`. Entering the product title and item id, you can get the top 10 related product recommendations.
+  1. Obtain recommendation results for a specific product by running `python recommendation/recommender.py`.
+  2. Interact with the recommendation system using `python recommendation/app.py`. Input the product title and item ID to receive the top 10 related product recommendations.
